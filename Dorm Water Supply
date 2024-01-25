@@ -1,0 +1,64 @@
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<cmath>
+#include<map>
+#include<set>
+#include <stdio.h>
+using namespace std;
+ 
+map<int, vector<pair<int,int> >  >ma;
+vector<int>vis;
+void fun(int n) {
+    for (int i = 0; i <= n; i++)vis.push_back(0);
+ 
+}
+int mi = 1e9;
+int a;
+void DFS(int ind) {
+    vis[ind] = 1;
+    a = ind;
+    for (int i = 0; i < ma[ind].size(); i++) {
+        if (!vis[ma[ind][i].first]) {
+            vis[ma[ind][i].first] = 1;
+            DFS(ma[ind][i].first);
+            mi = min(mi, ma[ind][i].second);
+        }
+        
+    }
+}
+int main() {
+    vector<int>ans;
+    set<int>ans1;
+    set<int>ans2;
+    
+    int n, m;
+    cin >> n >> m;
+    for (int i = 0; i < m; i++) {
+        int x, y,z;
+        cin >> x >> y>>z;
+        ma[x].push_back({y,z});
+ 
+        ans1.insert(x);
+        ans2.insert(y);
+    }
+   
+    for (auto io : ans1) {
+        if (ans2.find(io) == ans2.end()&&ma[io].size()>=1) {
+            ans.push_back(io);
+        }
+    }
+    int val = 0;
+    cout << ans.size() << "\n";
+    for (auto io : ans) {
+        vis.clear();
+        fun(n);
+        val = 1;
+        mi = 1e9;
+        DFS(io);
+        cout << io << " "<<a<<" ";
+        cout << mi << "\n";
+    }
+   
+    return 0;
+}
