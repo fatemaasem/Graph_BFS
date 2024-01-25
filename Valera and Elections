@@ -1,0 +1,49 @@
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<cmath>
+#include<map>
+#include<set>
+#include <stdio.h>
+using namespace std;
+int vis[100005];
+set<int>se;
+map<int, vector<pair<int, int> > >v;
+ 
+void DFS(int ind, int ans) {
+	vis[ind] = 1;
+	//cout << ind << " ";
+	for (int i = 0; i < v[ind].size(); i++) {
+ 
+		if (!vis[v[ind][i].first]) {
+ 
+			//	vis[v[ind][i].first]=1;
+			if (v[ind][i].second == 2) {
+				//cout << ans << " ";
+				if (!se.empty() && se.find(ans) != se.end())se.erase(ans);
+				
+				se.insert(v[ind][i].first);
+				DFS(v[ind][i].first, v[ind][i].first);
+				//cout << ans << " \n";
+			}
+			else 
+			DFS(v[ind][i].first, ans);
+		}
+	}
+ 
+}
+int main() {
+	int n;
+	cin >> n;
+	for (int i = 0; i < n - 1; i++) {
+		int x, y, t;
+		cin >> x >> y >> t;
+		v[x].push_back({ y,t });
+		v[y].push_back({ x,t });
+ 
+	}
+	DFS(1, -1);
+	cout << se.size() << "\n";
+	for (auto io : se)cout << io << " ";
+	return 0;
+}
