@@ -1,0 +1,76 @@
+#include <iostream>
+#include <cmath>
+#include <stack> 
+#include <vector>
+#include <map>
+#include <set>
+#include <queue>
+#include <algorithm>
+using namespace std;
+vector<set<int>  >arr;
+vector<int>vis;
+vector<int>ans;
+void fun(int n) {
+	set<int>v;
+	for (int i = 0; i <= n; i++) {
+		arr.push_back(v); vis.push_back(0);
+	}
+
+}
+int l = 1;
+bool R = true;
+void BFS(int ind) {
+	queue<int>q;
+	q.push(ind);
+	//vis[ind] = 1;
+	while (!q.empty()) {
+		int val = q.front();
+		int F = 0;
+		if (val != ans[0]) {
+			F = 1;
+		}
+		//cout << val << " " << F << " ";
+		for (int i = 0; i < arr[val].size()-F; i++) {
+			if (arr[val].find(ans[l]) == arr[val].end()) {
+				R = false; 
+				return;
+			}
+			q.push(ans[l]);
+			//vis[ans[l]];
+			l++;
+			
+		}
+		q.pop();
+	}
+}
+int main() {
+	int n;
+	cin >> n;
+	fun(n);
+	for (int i = 0; i < n - 1; i++) {
+		int x, y;
+		cin >> x >> y;
+		arr[x].insert(y);
+		arr[y].insert(x);
+	}
+	//cout << "ll";
+	for (int i = 0; i < n; i++) {
+		int x;
+		cin >> x; ans.push_back(x);
+	}
+	/*
+	for (int i = 1; i <= n; i++) {
+		for (auto io : arr[i])cout << io << " ";
+		cout << "\n";
+	}
+	*/
+	if (ans[0] != 1) {
+		cout << "NO\n";
+		return 0;
+	}
+	BFS(1);
+	if (R)cout << "YES\n";
+	else
+		cout << "NO\n";
+	return 0;
+}
