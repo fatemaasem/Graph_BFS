@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cmath>
+#include <stack>
+#include <vector>
+#include <map>
+using namespace std;
+vector<vector<char> >arr;
+int n,m,d;
+int cou=0;
+void dfs(int r,int c){
+	if(cou>=d){
+		return ;
+	}
+	arr[r][c]='1';
+	if(c+1<m&&arr[r][c+1]=='.')dfs(r,c+1);
+	if(r+1<n&&arr[r+1][c]=='.')dfs(r+1,c);
+	if(r-1>=0&&arr[r-1][c]=='.')dfs(r-1,c);
+	if(c-1>=0&&arr[r][c-1]=='.')dfs(r,c-1);
+	if(cou<d)
+	arr[r][c]='X';
+	cou++;
+ 
+}
+int main(int argc, char** argv) {
+cin>>n>>m>>d;
+for(int i=0;i<n;i++){
+	vector<char>ans(m);
+	for(int j=0;j<m;j++){
+		cin>>ans[j];
+	}
+	arr.push_back(ans);
+}
+ 
+int val=0;
+for(int i=0;i<n;i++){
+	for(int j=0;j<m;j++){
+		if(cou>=d){val=1;break;
+		}
+		if(arr[i][j]=='.')dfs(i,j);
+	}
+	if(val)break;
+}
+//cout<<cou;
+//cout<<"**************************************************\n";
+for(int i=0;i<n;i++){
+//	vector<int>ans(m);
+	for(int j=0;j<m;j++){
+		if(arr[i][j]=='1')arr[i][j]='.';
+		cout<<arr[i][j];
+	}
+cout<<"\n";
+}
+ 
+	return 0;
+}
