@@ -1,0 +1,39 @@
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<cmath>
+#include<set>
+#include <stdio.h>
+using namespace std;
+set<int>s;
+int val=0;
+void BFS(int nn,int m){
+queue<pair<int,int> >q;
+q.push({nn,0});
+while(!q.empty()){
+int c=q.front().second;
+int n=q.front().first;
+	if(n==m){
+		cout<<c<<"\n";
+		val=1;
+		return;
+	}
+	if(s.empty()||n*2<=2*m&&(s.find(n*2)==s.end())){
+		s.insert(n*2);
+		q.push({n*2,c+1});
+	
+	}
+	if((s.empty()&&n-1>=1)||(n-1>=1&&s.find(n-1)==s.end())){
+		s.insert(n-1);
+		q.push({n-1,c+1});
+	}
+ 
+	q.pop();
+}
+}
+int main() {
+ int n, m;
+ cin>>n>>m;
+ BFS(n,m);
+    return 0;
+}
