@@ -1,0 +1,54 @@
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<cmath>
+#include<set>
+#include <stdio.h>
+using namespace std;
+int per[200];
+int si[200];
+int vis[200];
+void fun(int n){
+	for(int i=1;i<=n;i++){
+	per[i]=i;si[i]=1;}
+}
+int  find_per(int x){
+	if(per[x]==x)return x;
+	return per[x]=find_per(per[x]);
+}
+void connect(int x,int y){
+	if(find_per(x)==find_per(y))return;
+x=find_per(x);
+y=find_per(y);
+	if(si[x]>si[y]){
+		per[y]=x;
+	si[x]+=si[y];
+	}
+	else{
+		per[x]=y;
+		si[y]+=si[x];
+		
+	}
+}
+int main() {
+  int n,m;
+  cin>>n>>m;
+  fun(n);
+  for(int i=0;i<m;i++){
+  	int x,y;
+  	cin>>x>>y;
+  	vis[x]++;
+  	vis[y]++;
+  	connect(x,y);
+  }
+  set<int>se;
+  for(int i=1;i<=n;i++){
+  	se.insert(find_per(i));
+ // 	cout<<vis[i]<<" ";
+  //	cout<<find_per(i)<<" ";
+  }
+  if(se.size()==1&&n==m)cout<<"FHTAGN!\n";
+  else 
+  cout<<"NO\n";
+    return 0;
+}
