@@ -1,0 +1,55 @@
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<cmath>
+#include<map>
+#include<set>
+#include <stdio.h>
+using namespace std;
+vector<int>vis;
+map<int,vector<int> >ma;
+void fun(int n){
+	for(int i=0;i<=n;i++)vis.push_back(0);
+}
+ 
+int a;
+int mm=0;
+void BFS(int val){
+	queue<pair<int,int> >q;
+	q.push({val,0});
+	vis[val]=1;
+	while(!q.empty()){
+		int ans=q.front().first;
+		int c=q.front().second;
+		a=ans;
+		for(int i=0;i<ma[ans].size();i++){
+			if(!vis[ma[ans][i]]){
+				vis[ma[ans][i]]=1;
+				q.push({ma[ans][i],c+1});
+				mm=max(mm,c+1);
+			}
+		}
+		q.pop();
+	}
+}
+int main() {
+ int n, m;
+ cin>>n>>m;
+ int val;
+ fun(n);
+for(int i=0;i<m;i++){
+	int x,y;
+	cin>>x>>y;
+	if(i==0)val=x;
+	ma[x].push_back(y);
+	ma[y].push_back(x);
+} 
+BFS(val);
+vis.clear();
+fun(n);
+mm=0;
+BFS(a);
+ 
+cout<<mm;
+    return 0;
+}
