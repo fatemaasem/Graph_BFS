@@ -1,0 +1,54 @@
+#include <iostream>
+#include <cmath>
+#include <stack> 
+#include <vector>
+#include <map>
+#include <set>
+#include <queue>
+#include <algorithm>
+using namespace std;
+
+const int N=10001;
+vector<int>arr[N];
+void fun(int n,int m){
+	for(int i=0;i<m;i++){
+		int x,y;
+		cin>>x>>y;
+		arr[x].push_back(y);
+		arr[y].push_back(x);
+	}
+}
+int vis[N];
+void BFS(int node){
+	queue<int>q;
+	q.push(node);
+	vis[node]=1;
+	while(!q.empty()){
+		int ans=q.front();
+		for(int i=0;i<arr[ans].size();i++){
+			if(!vis[arr[ans][i]]){
+			q.push(arr[ans][i]);
+			vis[arr[ans][i]]=1;
+		}
+		}
+		q.pop();
+	}
+	
+}
+int main(){
+int n,m;
+cin>>n>>m;
+if(m!=n-1){
+	cout<<"NO\n";
+	return 0;
+}
+fun(n,m);
+BFS(1);
+for(int i=1;i<=n;i++){
+if(!vis[i]){
+	cout<<"NO\n";return 0;
+}
+}
+cout<<"YES\n";
+	return 0;
+}
