@@ -1,0 +1,58 @@
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<cmath>
+#include<set>
+#include <stdio.h>
+using namespace std;
+int xx,yy,x2,y2;
+int dx[] = {-1, -1, -1, 1, 1, 1, 0, 0};
+int dy[] = {-1, 0, 1, -1, 0, 1, 1, -1};
+set<pair<int,int> >se;
+set<pair<int,int > >vis;
+int val=1;
+bool valid(int x,int y){
+	return (se.find({x,y})!=se.end()&&vis.find({x,y})==vis.end());
+}
+ 
+void BFS(){
+	queue<pair< pair<int,int> ,int> >q;
+	q.push({{xx,yy},0});
+	vis.insert({xx,yy});
+	while(!q.empty()){
+		int x=q.front().first.first;
+		int y=q.front().first.second;
+	//	cout<<x<<" "<<y<<"\n";
+		int per=q.front().second;
+	for(int i=0;i<8;i++){
+		int newx=x+dx[i];
+		int newy=y+dy[i];
+			if(newx==x2&&newy==y2){
+				cout<<per+1<<"\n";
+				val=0;
+				return;
+			}
+		if(valid(newx,newy)){
+			vis.insert({newx,newy});
+			q.push({{newx,newy},per+1});
+		
+		}
+	}
+	q.pop();
+}
+}
+int main() {
+ cin>>xx>>yy>>x2>>y2;
+ int n;
+ cin>>n;
+ for(int i=0;i<n;i++){
+ 	int r,x,y;
+ 	cin>>r>>x>>y;
+ 	for(int i=x;i<=y;i++){
+ 		se.insert({r,i});
+	 }
+ }
+ BFS();
+ if(val)cout<<"-1\n";
+    return 0;
+}
